@@ -34,10 +34,12 @@ void connectToInternet() {
   
   if (!cc3000.connectToAP(WLAN_SSID, WLAN_PASS, WLAN_SECURITY)) {
     // Serial.print("ERROR: Failed to connect to "); Serial.println(WLAN_SSID);
+    playError();
     while(1);
   }
-  
+
   Serial.println("Connected to WLAN network!");
+  playSuccess();
   
   // Wait for DHCP to complete
   // Serial.println("Request DHCP...");
@@ -79,7 +81,8 @@ Adafruit_CC3000_Client createConnection() {
     www.println();
     return www;
   } else {
-    // Serial.println("ERROR: Failed to create connection");    
+    // Serial.println("ERROR: Failed to create connection");
+    playError();   
     return;
   }
 }
@@ -131,17 +134,17 @@ void listSSIDResults(void) {
     return;
   }
 
-  // Serial.print("Networks found: "); Serial.println(index);
-  // Serial.println("================================================");
+//  Serial.print("Networks found: "); Serial.println(index);
+//  Serial.println("================================================");
 
   while (index) {
     index--;
 
     valid = cc3000.getNextSSID(&rssi, &sec, ssidname);
     
-    // Serial.print("SSID Name    : "); Serial.println(ssidname);
-    // Serial.print("RSSI         : "); Serial.println(rssi);
-    // Serial.print("Security Mode: "); Serial.println(sec);
+//    Serial.print("SSID Name    : "); Serial.println(ssidname);
+//    Serial.print("RSSI         : "); Serial.println(rssi);
+//    Serial.print("Security Mode: "); Serial.println(sec);
   }
   
   // Serial.println("================================================");

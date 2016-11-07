@@ -24,28 +24,3 @@ void sendCommandToColorduino(String msg) {
     Serial.println(msg);
   }
 }
-
-String getCommandForColorduino(String* projectsStatuses) {
-  String command;
-
-  if (_contains(LEDMATRIX_COMMAND_RED, projectsStatuses)) {
-    command = LEDMATRIX_COMMAND_RED;
-  } else if (_contains(LEDMATRIX_COMMAND_YELLOW, projectsStatuses)) {
-    command = LEDMATRIX_COMMAND_YELLOW;
-  } else {
-    command = LEDMATRIX_COMMAND_GREEN;
-  }
-
-  return command;
-}
-
-boolean _contains(String value, String* projectsStatuses) {
-  boolean contains = false;
-  for (int i = 0; i < PROJECTS_QUANTITY; i++) {
-    if (projectsStatuses[i] == value) {
-      contains = true;
-      break;
-    }
-  }
-  return contains;
-}

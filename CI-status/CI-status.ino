@@ -8,7 +8,8 @@
  * Define the http address of the server that returns data for Arduino
  */
 #define CIPROJECT_HOST "arduino-demven.rhcloud.com"
-#define CIPROJECT_PAGE "/circleci/test/grn/grn/grn/yel"
+// #define CIPROJECT_PAGE "/circleci/test/red/grn/grn/grn"
+#define CIPROJECT_PAGE "/circleci/all"
 #define CIPROJECT_PORT 80
 #define CIPROJECT_PROJECT_LEN 3
 #define CIPROJECT_RESPONSE_LEN 12
@@ -17,8 +18,10 @@
  * Define the name and password of your WiFi router
  * Security can be WLAN_SEC_UNSEC, WLAN_SEC_WEP, WLAN_SEC_WPA or WLAN_SEC_WPA2
  */
-#define WLAN_SSID "WIFIFA89C4"
-#define WLAN_PASS "64P5Z3RM64IDZRYD"
+// #define WLAN_SSID "WIFIFA89C4"
+// #define WLAN_PASS "64P5Z3RM64IDZRYD"
+#define WLAN_SSID "Dmitry’s iPhone"
+#define WLAN_PASS "041291kjh88hbv"
 #define WLAN_SECURITY WLAN_SEC_WPA2
 
 /*
@@ -41,6 +44,9 @@ String projectsResults[PROJECTS_QUANTITY];
 
 void setup(void) {
   Serial.begin(115200);
+
+  initBuzzer();
+  playGreeting();
   
   initLEDMatrixClient();
 
@@ -60,8 +66,10 @@ void loop(void) {
   translateResponseToArray(projectsResults, resultFromServer, PROJECTS_QUANTITY);
   indicateProjects(projectsResults);
   
-  String commandForColorduino = getCommandForColorduino(projectsResults);
-  sendCommandToColorduino(commandForColorduino);
+  String theWorstCommand = getTheWorstCommand(projectsResults);
+  
+  sendCommandToColorduino(theWorstCommand);
+  sendCommandToBuzzer(theWorstCommand);
   
   stopConnection(connection);
   
