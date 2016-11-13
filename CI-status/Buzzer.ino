@@ -13,6 +13,8 @@
 // PWM pin for piezo buzzer
 #define BUZZER_PIN 9
 
+#define BUZZER_DELAY 200
+
 String previousCommand = "";
 
 void initBuzzer() {
@@ -21,8 +23,14 @@ void initBuzzer() {
 
 void sendCommandToBuzzer(String msg) {
   if (msg == LEDMATRIX_COMMAND_RED && previousCommand != LEDMATRIX_COMMAND_RED) {
+    // broken
     playWarning();
-  } else if (msg == LEDMATRIX_COMMAND_GREEN && previousCommand == "" || previousCommand == LEDMATRIX_COMMAND_RED) {
+  } else if (msg == LEDMATRIX_COMMAND_GREEN && previousCommand == "") {
+    // first result is green
+    playSuccess();
+  } else if (msg == LEDMATRIX_COMMAND_GREEN && previousCommand == LEDMATRIX_COMMAND_RED) {
+    // fixed
+    playSuccess();
     playSuccess();
   }
 
@@ -33,6 +41,7 @@ void playError() {
   tone(BUZZER_PIN, 392, 300);
   delay(200);
   tone(BUZZER_PIN, 262, 300);
+  delay(200);
 }
 
 void playWarning() {
@@ -43,18 +52,20 @@ void playWarning() {
 
 void playSuccess() {
   tone(BUZZER_PIN, 262, 300);
-  delay(200);
+  delay(BUZZER_DELAY);
   tone(BUZZER_PIN, 392, 300);
+  delay(BUZZER_DELAY);
 }
 
 void playGreeting() {
   tone(BUZZER_PIN, 494, 300);
-  delay(200);
+  delay(BUZZER_DELAY);
   tone(BUZZER_PIN, 392, 300);
-  delay(200);
+  delay(BUZZER_DELAY);
   tone(BUZZER_PIN, 294, 300);
-  delay(200);
+  delay(BUZZER_DELAY);
   tone(BUZZER_PIN, 392, 300);
+  delay(BUZZER_DELAY);
 }
 
 void _makeWarningNoize() {

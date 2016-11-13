@@ -1,3 +1,11 @@
+void initLogger() {
+  #if DEBUG_MODE
+    Serial.begin(115200);
+  #elif WIFI_DEBUG_MODE
+    Serial.begin(115200);
+  #endif
+}
+
 void translateResponseToArray(String* arrayRef, String res, int quantity) {
   int resLen = res.length();
   if (resLen == CIPROJECT_RESPONSE_LEN) {
@@ -20,7 +28,7 @@ String getTheWorstCommand(String* projectsStatuses) {
     command = LEDMATRIX_COMMAND_RED;
   } else if (_contains(LEDMATRIX_COMMAND_YELLOW, projectsStatuses)) {
     command = LEDMATRIX_COMMAND_YELLOW;
-  } else {
+  } else if (_contains(LEDMATRIX_COMMAND_GREEN, projectsStatuses)) {
     command = LEDMATRIX_COMMAND_GREEN;
   }
 

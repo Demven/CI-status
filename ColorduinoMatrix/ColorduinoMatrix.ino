@@ -1,7 +1,15 @@
 #include <Colorduino.h>
 #include <Wire.h>
 
+// I2C address of the master board
 #define TWI_PIN 8
+
+/*
+ * Possible commands that could be sent to Colorduino
+ */
+#define LEDMATRIX_COMMAND_RED "red"
+#define LEDMATRIX_COMMAND_GREEN "grn"
+#define LEDMATRIX_COMMAND_YELLOW "yel"
 
 byte whiteBalVal[3] = { 37, 63, 63 };
 String msg = "";
@@ -25,11 +33,11 @@ void getMsg(int howMany) {
     msg.concat((char)Wire.read());
   }
 
-  if (msg == "red") {
+  if (msg == LEDMATRIX_COMMAND_RED) {
     showRed();
-  } else if (msg == "yel") {
+  } else if (msg == LEDMATRIX_COMMAND_YELLOW) {
     showYellow();
-  } else if (msg == "grn") {
+  } else if (msg == LEDMATRIX_COMMAND_GREEN) {
     showGreen();
   }
 
